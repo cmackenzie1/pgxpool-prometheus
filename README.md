@@ -1,6 +1,6 @@
-# pgx-prometheus
+# pgxpool-prometheus
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/cmackenzie1/pgx-prometheus.svg)](https://pkg.go.dev/github.com/cmackenzie1/pgx-prometheus)
+[![Go Reference](https://pkg.go.dev/badge/github.com/cmackenzie1/pgxpool-prometheus.svg)](https://pkg.go.dev/github.com/cmackenzie1/pgx-prometheus)
 
 A [pgx](https://github.com/jackc/pgx) [Prometheus](https://prometheus.io/) metrics collector for Go applications
 using [pgxpool](https://pkg.go.dev/github.com/jackc/pgx/v5/pgxpool).
@@ -8,7 +8,7 @@ using [pgxpool](https://pkg.go.dev/github.com/jackc/pgx/v5/pgxpool).
 ## Installation
 
 ```bash
-go get github.com/cmackenzie1/pgx-prometheus
+go get github.com/cmackenzie1/pgxpool-prometheus
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/cmackenzie1/pgx-prometheus"
+	"github.com/cmackenzie1/pgxpool-prometheus"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -42,7 +42,7 @@ func main() {
 		panic(err)
 	}
 
-	prometheus.MustRegister(pgx_prometheus.NewPgxStatsCollector(pool, "database"))
+	prometheus.MustRegister(pgxpool_prometheus.NewPgxStatsCollector(pool, "database"))
 
 	log.Fatalf("Error: %v", http.ListenAndServe(":8080", promhttp.Handler()))
 }

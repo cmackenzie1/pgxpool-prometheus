@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/cmackenzie1/pgx-prometheus"
+	pgx_prometheus "github.com/cmackenzie1/pgxpool-prometheus"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"

@@ -1,4 +1,4 @@
-module github.com/cmackenzie1/pgx-prometheus
+module github.com/cmackenzie1/pgxpool-prometheus
 
 go 1.19
 
