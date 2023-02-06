@@ -42,7 +42,7 @@ func main() {
 		panic(err)
 	}
 
-	prometheus.MustRegister(pgxpool_prometheus.NewPgxStatsCollector(pool, "database"))
+	prometheus.MustRegister(pgxpool_prometheus.NewPgxPoolStatsCollector(pool, "database"))
 
 	log.Fatalf("Error: %v", http.ListenAndServe(":8080", promhttp.Handler()))
 }
