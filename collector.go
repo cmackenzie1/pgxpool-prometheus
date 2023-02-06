@@ -1,13 +1,13 @@
-package pgx_prometheus
+package pgxpool_prometheus
 
 import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-// PgxPoolCollector is a Prometheus collector for pgx metrics.
+// PgxPoolStatsCollector is a Prometheus collector for pgx metrics.
 // It implements the prometheus.Collector interface.
-type PgxPoolCollector struct {
+type PgxPoolStatsCollector struct {
 	db *pgxpool.Pool
 
 	acquireConns            *prometheus.Desc
@@ -22,16 +22,16 @@ type PgxPoolCollector struct {
 	maxIdleDestroyCount     *prometheus.Desc
 }
 
-// NewPgxStatsCollector returns a new pgxCollector.
+// NewPgxPoolStatsCollector returns a new pgxCollector.
 // The dbName parameter is used to set the "db" label on the metrics.
 // The db parameter is the pgxpool.Pool to collect metrics from.
 // The db parameter must not be nil.
 // The dbName parameter must not be empty.
-func NewPgxStatsCollector(db *pgxpool.Pool, dbName string) *PgxPoolCollector {
+func NewPgxPoolStatsCollector(db *pgxpool.Pool, dbName string) *PgxPoolStatsCollector {
 	fqName := func(name string) string {
 		return prometheus.BuildFQName("pgx", "pool", name)
 	}
-	return &PgxPoolCollector{
+	return &PgxPoolStatsCollector{
 		db: db,
 		acquireConns: prometheus.NewDesc(
 			fqName("acquire_connections"),
@@ -97,7 +97,7 @@ func NewPgxStatsCollector(db *pgxpool.Pool, dbName string) *PgxPoolCollector {
 }
 
 // Describe implements the prometheus.Collector interface.
-func (p PgxPoolCollector) Describe(descs chan<- *prometheus.Desc) {
+func (p PgxPoolStatsCollector) Describe(descs chan<- *prometheus.Desc) {
 	descs <- p.acquireConns
 	descs <- p.canceledAcquireCount
 	descs <- p.constructingConns
@@ -111,7 +111,7 @@ func (p PgxPoolCollector) Describe(descs chan<- *prometheus.Desc) {
 }
 
 // Collect implements the prometheus.Collector interface.
-func (p PgxPoolCollector) Collect(metrics chan<- prometheus.Metric) {
+func (p PgxPoolStatsCollector) Collect(metrics chan<- prometheus.Metric) {
 	stats := p.db.Stat()
 
 	metrics <- prometheus.MustNewConstMetric(p.acquireConns, prometheus.GaugeValue, float64(stats.AcquiredConns()))

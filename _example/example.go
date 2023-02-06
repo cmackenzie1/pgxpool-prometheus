@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	pgx_prometheus "github.com/cmackenzie1/pgxpool-prometheus"
+	"github.com/cmackenzie1/pgxpool-prometheus"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -25,7 +25,7 @@ func main() {
 	}
 	defer pool.Close()
 
-	prometheus.MustRegister(pgx_prometheus.NewPgxStatsCollector(pool, "database"))
+	prometheus.MustRegister(pgxpool_prometheus.NewPgxPoolStatsCollector(pool, "database"))
 
 	if err := pool.QueryRow(context.Background(), "SELECT 1").Scan(nil); err != nil {
 		panic(err)
