@@ -5,9 +5,9 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-// PgxCollector is a Prometheus collector for pgx metrics.
+// PgxPoolCollector is a Prometheus collector for pgx metrics.
 // It implements the prometheus.Collector interface.
-type PgxCollector struct {
+type PgxPoolCollector struct {
 	db *pgxpool.Pool
 
 	acquireConns            *prometheus.Desc
@@ -27,11 +27,11 @@ type PgxCollector struct {
 // The db parameter is the pgxpool.Pool to collect metrics from.
 // The db parameter must not be nil.
 // The dbName parameter must not be empty.
-func NewPgxStatsCollector(db *pgxpool.Pool, dbName string) *PgxCollector {
+func NewPgxStatsCollector(db *pgxpool.Pool, dbName string) *PgxPoolCollector {
 	fqName := func(name string) string {
 		return prometheus.BuildFQName("pgx", "pool", name)
 	}
-	return &PgxCollector{
+	return &PgxPoolCollector{
 		db: db,
 		acquireConns: prometheus.NewDesc(
 			fqName("acquire_connections"),
@@ -97,7 +97,7 @@ func NewPgxStatsCollector(db *pgxpool.Pool, dbName string) *PgxCollector {
 }
 
 // Describe implements the prometheus.Collector interface.
-func (p PgxCollector) Describe(descs chan<- *prometheus.Desc) {
+func (p PgxPoolCollector) Describe(descs chan<- *prometheus.Desc) {
 	descs <- p.acquireConns
 	descs <- p.canceledAcquireCount
 	descs <- p.constructingConns
@@ -111,7 +111,7 @@ func (p PgxCollector) Describe(descs chan<- *prometheus.Desc) {
 }
 
 // Collect implements the prometheus.Collector interface.
-func (p PgxCollector) Collect(metrics chan<- prometheus.Metric) {
+func (p PgxPoolCollector) Collect(metrics chan<- prometheus.Metric) {
 	stats := p.db.Stat()
 
 	metrics <- prometheus.MustNewConstMetric(p.acquireConns, prometheus.GaugeValue, float64(stats.AcquiredConns()))
