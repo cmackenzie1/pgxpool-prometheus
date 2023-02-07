@@ -1,6 +1,7 @@
 # pgxpool-prometheus
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/cmackenzie1/pgxpool-prometheus.svg)](https://pkg.go.dev/github.com/cmackenzie1/pgxpool-prometheus)
+[![Go](https://github.com/cmackenzie1/pgxpool-prometheus/actions/workflows/go.yml/badge.svg)](https://github.com/cmackenzie1/pgxpool-prometheus/actions/workflows/go.yml)
 
 A [pgx](https://github.com/jackc/pgx) [Prometheus](https://prometheus.io/) metrics collector for Go applications
 using [pgxpool](https://pkg.go.dev/github.com/jackc/pgx/v5/pgxpool).
