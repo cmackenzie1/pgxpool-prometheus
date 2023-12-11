@@ -3,7 +3,7 @@ module github.com/cmackenzie1/pgxpool-prometheus
 go 1.19
 
 require (
-	github.com/jackc/pgx/v5 v5.4.3
+	github.com/jackc/pgx/v5 v5.5.1
 	github.com/prometheus/client_golang v1.17.0
 )
 
