@@ -5,10 +5,18 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
+// Stater defines a method for retrieving statistics from pgxpool.
+// The method returns a pointer to a pgxpool.Stat struct,
+// which contains various metrics and statistics about the
+// connection pool.
+type Stater interface {
+	Stat() *pgxpool.Stat
+}
+
 // PgxPoolStatsCollector is a Prometheus collector for pgx metrics.
 // It implements the prometheus.Collector interface.
 type PgxPoolStatsCollector struct {
-	db *pgxpool.Pool
+	db Stater
 
 	acquireConns            *prometheus.Desc
 	canceledAcquireCount    *prometheus.Desc
@@ -27,7 +35,7 @@ type PgxPoolStatsCollector struct {
 // The db parameter is the pgxpool.Pool to collect metrics from.
 // The db parameter must not be nil.
 // The dbName parameter must not be empty.
-func NewPgxPoolStatsCollector(db *pgxpool.Pool, dbName string) *PgxPoolStatsCollector {
+func NewPgxPoolStatsCollector(db Stater, dbName string) *PgxPoolStatsCollector {
 	fqName := func(name string) string {
 		return prometheus.BuildFQName("pgx", "pool", name)
 	}
