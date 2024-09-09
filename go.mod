@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/jackc/pgx/v5 v5.6.0
-	github.com/prometheus/client_golang v1.20.2
+	github.com/prometheus/client_golang v1.20.3
 )
 
 require (
