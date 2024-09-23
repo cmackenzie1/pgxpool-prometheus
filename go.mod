@@ -6,7 +6,7 @@ toolchain go1.22.5
 
 require (
 	github.com/jackc/pgx/v5 v5.7.0
-	github.com/prometheus/client_golang v1.20.3
+	github.com/prometheus/client_golang v1.20.4
 )
 
 require (
