@@ -2,10 +2,8 @@ module github.com/cmackenzie1/pgxpool-prometheus
 
 go 1.21
 
-toolchain go1.22.5
-
 require (
-	github.com/jackc/pgx/v5 v5.7.2
+	github.com/jackc/pgx/v5 v5.7.4
 	github.com/prometheus/client_golang v1.21.1
 )
 
