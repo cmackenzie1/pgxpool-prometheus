@@ -16,7 +16,7 @@ docker run --rm --name pgx-prometheus-example \
   -p 5432:5432 \
   -e POSTGRES_USER=postgres \
   -e POSTGRES_PASSWORD=password \
-  postgres:15-alpine
+  postgres:19-alpine
 ```
 
 2. Run the example:
